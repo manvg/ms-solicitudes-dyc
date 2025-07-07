@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "producto")
+@Table(name = "PRODUCTO")
 public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_producto")
+    @Column(name = "ID_PRODUCTO")
     private Long idProducto;
 
     @Column(nullable = false, length = 100)
@@ -24,18 +24,18 @@ public class Producto {
     @Column(nullable = false, precision = 7)
     private BigDecimal precio;
 
-    @Column(name = "url_imagen", length = 300)
+    @Column(name = "URL_IMAGEN", length = 300)
     private String urlImagen;
 
     @Column(nullable = false)
     private Integer activo = 1;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tipo_producto", nullable = false)
+    @JoinColumn(name = "ID_TIPO_PRODUCTO", nullable = false)
     private TipoProducto tipoProducto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_material", nullable = false)
+    @JoinColumn(name="ID_MATERIAL", nullable = false)
     private Material material;
 
 

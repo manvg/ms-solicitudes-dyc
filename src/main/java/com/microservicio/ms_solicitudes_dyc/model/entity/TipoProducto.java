@@ -3,12 +3,12 @@ package com.microservicio.ms_solicitudes_dyc.model.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tipo_producto")
+@Table(name = "TIPO_PRODUCTO")
 public class TipoProducto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_tipo_producto")
+    @Column(name = "id_TIPO_PRODUCTO")
     private Long idTipoProducto;
 
     @Column(nullable = false, length = 50)

@@ -1,4 +1,5 @@
 package com.microservicio.ms_solicitudes_dyc.model.entity;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,14 @@ public class SolicitudProducto {
 
     @Column(name = "CANTIDAD", nullable = false)
     private Integer cantidad;
+
+    public SolicitudProducto() {}
+
+    public SolicitudProducto(Solicitud solicitud, Producto producto, Integer cantidad) {
+        this.solicitud = solicitud;
+        this.producto = producto;
+        this.cantidad = cantidad;
+    }
 
     public Solicitud getSolicitud() {
         return solicitud;

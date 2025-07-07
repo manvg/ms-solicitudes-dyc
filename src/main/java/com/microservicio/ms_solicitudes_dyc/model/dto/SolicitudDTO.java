@@ -3,7 +3,9 @@ package com.microservicio.ms_solicitudes_dyc.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,4 +19,6 @@ public class SolicitudDto {
     private String correoCliente;
     private String telefonoCliente;
     private String observaciones;
+    private List<SolicitudProductoDto> productos;
+    private List<SolicitudImagenDto> imagenes;
 }

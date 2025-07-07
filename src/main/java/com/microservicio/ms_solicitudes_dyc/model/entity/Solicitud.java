@@ -2,6 +2,7 @@ package com.microservicio.ms_solicitudes_dyc.model.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "SOLICITUD")
@@ -34,7 +35,12 @@ public class Solicitud {
     @Column(name = "OBSERVACIONES", length = 500)
     private String observaciones;
 
-    // Getters
+    @OneToMany(mappedBy = "solicitud", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SolicitudProducto> productos;
+
+    @OneToMany(mappedBy = "solicitud", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SolicitudImagen> imagenes;
+
     public Long getIdSolicitud() {
         return idSolicitud;
     }
@@ -67,7 +73,6 @@ public class Solicitud {
         return observaciones;
     }
 
-    // Setters
     public void setIdSolicitud(Long idSolicitud) {
         this.idSolicitud = idSolicitud;
     }
@@ -98,5 +103,21 @@ public class Solicitud {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public List<SolicitudProducto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<SolicitudProducto> productos) {
+        this.productos = productos;
+    }
+
+    public List<SolicitudImagen> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<SolicitudImagen> imagenes) {
+        this.imagenes = imagenes;
     }
 }

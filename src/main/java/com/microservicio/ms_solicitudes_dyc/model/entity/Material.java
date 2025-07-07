@@ -7,13 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-//new 30/06/25
-
 @Entity
-@Table(name="material")
+@Table(name="MATERIAL")
 public class Material {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_material")
+    @Column(name = "ID_MATERIAL")
     private Long idMaterial;
     
     @Column(nullable = false, length = 100)
@@ -22,7 +20,6 @@ public class Material {
     @Column(nullable = false)
     private Integer activo = 1;
 
-    //Getter
     public Long getIdMaterial() {
         return idMaterial;
     }
@@ -35,7 +32,6 @@ public class Material {
         return activo;
     }
 
-    //Setter
     public void setIdMaterial(Long idMaterial) {
         this.idMaterial = idMaterial;
     }
