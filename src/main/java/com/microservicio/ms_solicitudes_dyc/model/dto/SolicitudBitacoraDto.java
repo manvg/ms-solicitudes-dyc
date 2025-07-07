@@ -8,13 +8,11 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SolicitudDto {
+public class SolicitudBitacoraDto {
+    private Long idSolicitudBitacora;
     private Long idSolicitud;
-    private Long idTipoSolicitud;
     private Long idEstadoSolicitud;
+    private String descripcion;
     private LocalDateTime fechaCreacion;
-    private String nombreCliente;
-    private String correoCliente;
-    private String telefonoCliente;
-    private String observaciones;
+    private String usuarioCreacion;
 }
