@@ -16,3 +16,4 @@ public class SolicitudBitacoraDto {
     private LocalDateTime fechaCreacion;
     private String usuarioCreacion;
 }
+// comment
