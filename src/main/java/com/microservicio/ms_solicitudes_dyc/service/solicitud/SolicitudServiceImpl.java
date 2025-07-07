@@ -8,6 +8,7 @@ import com.microservicio.ms_solicitudes_dyc.model.entity.Solicitud;
 import com.microservicio.ms_solicitudes_dyc.model.entity.SolicitudBitacora;
 import com.microservicio.ms_solicitudes_dyc.model.entity.SolicitudImagen;
 import com.microservicio.ms_solicitudes_dyc.model.entity.SolicitudProducto;
+import com.microservicio.ms_solicitudes_dyc.repository.ProductoRepository;
 import com.microservicio.ms_solicitudes_dyc.repository.SolicitudBitacoraRepository;
 import com.microservicio.ms_solicitudes_dyc.repository.SolicitudImagenRepository;
 import com.microservicio.ms_solicitudes_dyc.repository.SolicitudProductoRepository;
@@ -37,6 +38,9 @@ public class SolicitudServiceImpl implements SolicitudService {
 
     @Autowired
     private SolicitudImagenRepository solicitudImagenRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
 
     //--------- GET TODOS ---------//
     @Override
@@ -113,22 +117,57 @@ public class SolicitudServiceImpl implements SolicitudService {
 
     //--------- ACTUALIZAR ---------//
     @Override
+    @Transactional
     public void actualizar(Long id, SolicitudDto dto) {
         Solicitud existente = solicitudRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
-
+    
+        // Actualizar campos simples
         existente.setTipoSolicitud(
                 dto.getIdTipoSolicitud() != null ?
                         SolicitudMapper.tipoSolicitudFromId(dto.getIdTipoSolicitud()) : null);
         existente.setEstadoSolicitud(
                 dto.getIdEstadoSolicitud() != null ?
                         SolicitudMapper.estadoSolicitudFromId(dto.getIdEstadoSolicitud()) : null);
-
+    
         existente.setNombreCliente(dto.getNombreCliente());
         existente.setCorreoCliente(dto.getCorreoCliente());
         existente.setTelefonoCliente(dto.getTelefonoCliente());
         existente.setObservaciones(dto.getObservaciones());
-
+    
+        //Actualización de productos
+        if (existente.getProductos() != null) {
+            existente.getProductos().clear();
+        }
+        if (dto.getProductos() != null) {
+            for (SolicitudProductoDto prodDto : dto.getProductos()) {
+                SolicitudProducto nuevoProd = new SolicitudProducto();
+                nuevoProd.setSolicitud(existente);
+                Producto producto = productoRepository.findById(prodDto.getIdProducto())
+                        .orElseThrow(() -> new RuntimeException("Producto no encontrado (ID: " + prodDto.getIdProducto() + ")"));
+                nuevoProd.setProducto(producto);
+                nuevoProd.setCantidad(prodDto.getCantidad());
+                existente.getProductos().add(nuevoProd);
+            }
+        }
+    
+        //Actualización de imagenes
+        if (existente.getImagenes() != null) {
+            existente.getImagenes().clear();
+        }
+        if (dto.getImagenes() != null) {
+            for (SolicitudImagenDto imgDto : dto.getImagenes()) {
+                SolicitudImagen nuevaImagen = new SolicitudImagen();
+                nuevaImagen.setSolicitud(existente);
+                nuevaImagen.setNombre(imgDto.getNombre());
+                nuevaImagen.setExtension(imgDto.getExtension());
+                nuevaImagen.setDescripcion(imgDto.getDescripcion());
+                nuevaImagen.setUrlImagen(imgDto.getUrlImagen());
+                nuevaImagen.setActivo(imgDto.getActivo());
+                existente.getImagenes().add(nuevaImagen);
+            }
+        }
+    
         solicitudRepository.save(existente);
     }
 
