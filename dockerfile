@@ -19,7 +19,7 @@ COPY Wallet_MJVBC32FWKXL3WN2 /app/Wallet_MJVBC32FWKXL3WN2
 
 ENV TNS_ADMIN=app/Wallet_MJVBC32FWKXL3WN2
 
-COPY --from=build /app/target/ms_solicitudes_dyc-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/ms-solicitudes-dyc-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8081
 
