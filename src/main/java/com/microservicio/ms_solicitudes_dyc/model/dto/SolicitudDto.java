@@ -13,7 +13,11 @@ import java.util.List;
 public class SolicitudDto {
     private Long idSolicitud;
     private Long idTipoSolicitud;
+    private String nombreTipoSolicitud;
     private Long idEstadoSolicitud;
+    private String nombreEstadoSolicitud;
+    private Long idServicio;
+    private String nombreServicio;
     private LocalDateTime fechaCreacion;
     private String nombreCliente;
     private String correoCliente;
@@ -22,3 +26,4 @@ public class SolicitudDto {
     private List<SolicitudProductoDto> productos;
     private List<SolicitudImagenDto> imagenes;
 }
+

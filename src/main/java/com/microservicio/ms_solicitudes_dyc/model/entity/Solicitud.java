@@ -20,6 +20,10 @@ public class Solicitud {
     @JoinColumn(name = "ID_ESTADO_SOLICITUD", nullable = false)
     private EstadoSolicitud estadoSolicitud;
 
+    @ManyToOne
+    @JoinColumn(name = "ID_SERVICIO", nullable = true)
+    private Servicio servicio;
+
     @Column(name = "FECHA_CREACION")
     private LocalDateTime fechaCreacion;
 
@@ -41,83 +45,36 @@ public class Solicitud {
     @OneToMany(mappedBy = "solicitud", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SolicitudImagen> imagenes;
 
-    public Long getIdSolicitud() {
-        return idSolicitud;
-    }
+    public Long getIdSolicitud() { return idSolicitud; }
+    public void setIdSolicitud(Long idSolicitud) { this.idSolicitud = idSolicitud; }
 
-    public TipoSolicitud getTipoSolicitud() {
-        return tipoSolicitud;
-    }
+    public TipoSolicitud getTipoSolicitud() { return tipoSolicitud; }
+    public void setTipoSolicitud(TipoSolicitud tipoSolicitud) { this.tipoSolicitud = tipoSolicitud; }
 
-    public EstadoSolicitud getEstadoSolicitud() {
-        return estadoSolicitud;
-    }
+    public EstadoSolicitud getEstadoSolicitud() { return estadoSolicitud; }
+    public void setEstadoSolicitud(EstadoSolicitud estadoSolicitud) { this.estadoSolicitud = estadoSolicitud; }
 
-    public LocalDateTime getFechaCreacion() {
-        return fechaCreacion;
-    }
+    public Servicio getServicio() { return servicio; }
+    public void setServicio(Servicio servicio) { this.servicio = servicio; }
 
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
+    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
 
-    public String getCorreoCliente() {
-        return correoCliente;
-    }
+    public String getNombreCliente() { return nombreCliente; }
+    public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
 
-    public String getTelefonoCliente() {
-        return telefonoCliente;
-    }
+    public String getCorreoCliente() { return correoCliente; }
+    public void setCorreoCliente(String correoCliente) { this.correoCliente = correoCliente; }
 
-    public String getObservaciones() {
-        return observaciones;
-    }
+    public String getTelefonoCliente() { return telefonoCliente; }
+    public void setTelefonoCliente(String telefonoCliente) { this.telefonoCliente = telefonoCliente; }
 
-    public void setIdSolicitud(Long idSolicitud) {
-        this.idSolicitud = idSolicitud;
-    }
+    public String getObservaciones() { return observaciones; }
+    public void setObservaciones(String observaciones) { this.observaciones = observaciones; }
 
-    public void setTipoSolicitud(TipoSolicitud tipoSolicitud) {
-        this.tipoSolicitud = tipoSolicitud;
-    }
+    public List<SolicitudProducto> getProductos() { return productos; }
+    public void setProductos(List<SolicitudProducto> productos) { this.productos = productos; }
 
-    public void setEstadoSolicitud(EstadoSolicitud estadoSolicitud) {
-        this.estadoSolicitud = estadoSolicitud;
-    }
-
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
-
-    public void setCorreoCliente(String correoCliente) {
-        this.correoCliente = correoCliente;
-    }
-
-    public void setTelefonoCliente(String telefonoCliente) {
-        this.telefonoCliente = telefonoCliente;
-    }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
-    }
-
-    public List<SolicitudProducto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<SolicitudProducto> productos) {
-        this.productos = productos;
-    }
-
-    public List<SolicitudImagen> getImagenes() {
-        return imagenes;
-    }
-
-    public void setImagenes(List<SolicitudImagen> imagenes) {
-        this.imagenes = imagenes;
-    }
+    public List<SolicitudImagen> getImagenes() { return imagenes; }
+    public void setImagenes(List<SolicitudImagen> imagenes) { this.imagenes = imagenes; }
 }

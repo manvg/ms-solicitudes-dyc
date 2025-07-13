@@ -6,24 +6,27 @@ import com.microservicio.ms_solicitudes_dyc.model.dto.SolicitudImagenDto;
 import com.microservicio.ms_solicitudes_dyc.model.entity.Solicitud;
 import com.microservicio.ms_solicitudes_dyc.model.entity.TipoSolicitud;
 import com.microservicio.ms_solicitudes_dyc.model.entity.EstadoSolicitud;
+import com.microservicio.ms_solicitudes_dyc.model.entity.Servicio;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class SolicitudMapper {
-
-    // ---- ENTITY -> DTO ----
     public static SolicitudDto toDto(Solicitud entidad) {
         if (entidad == null) return null;
 
         List<SolicitudProductoDto> productos = null;
         if (entidad.getProductos() != null) {
             productos = entidad.getProductos().stream()
-                .map(sp -> new SolicitudProductoDto(
-                    sp.getSolicitud() != null ? sp.getSolicitud().getIdSolicitud() : null,
-                    sp.getProducto() != null ? sp.getProducto().getIdProducto() : null,
-                    sp.getCantidad()
-                )).collect(Collectors.toList());
+                .map(sp -> {
+                    String nombreProducto = (sp.getProducto() != null) ? sp.getProducto().getNombre() : null;
+                    return new SolicitudProductoDto(
+                        sp.getSolicitud() != null ? sp.getSolicitud().getIdSolicitud() : null,
+                        sp.getProducto() != null ? sp.getProducto().getIdProducto() : null,
+                        nombreProducto,
+                        sp.getCantidad()
+                    );
+                }).collect(Collectors.toList());
         }
 
         List<SolicitudImagenDto> imagenes = null;
@@ -43,7 +46,11 @@ public class SolicitudMapper {
         return new SolicitudDto(
             entidad.getIdSolicitud(),
             entidad.getTipoSolicitud() != null ? entidad.getTipoSolicitud().getIdTipoSolicitud() : null,
+            entidad.getTipoSolicitud() != null ? entidad.getTipoSolicitud().getNombreSolicitud() : null,
             entidad.getEstadoSolicitud() != null ? entidad.getEstadoSolicitud().getIdEstadoSolicitud() : null,
+            entidad.getEstadoSolicitud() != null ? entidad.getEstadoSolicitud().getNombreEstado() : null,
+            entidad.getServicio() != null ? entidad.getServicio().getIdServicio() : null,
+            entidad.getServicio() != null ? entidad.getServicio().getNombre() : null,
             entidad.getFechaCreacion(),
             entidad.getNombreCliente(),
             entidad.getCorreoCliente(),
@@ -54,21 +61,29 @@ public class SolicitudMapper {
         );
     }
 
-    // ---- DTO -> ENTITY ----
     public static Solicitud toEntity(SolicitudDto dto) {
         if (dto == null) return null;
         Solicitud entidad = new Solicitud();
         entidad.setIdSolicitud(dto.getIdSolicitud());
+
         if (dto.getIdTipoSolicitud() != null) {
             TipoSolicitud tipo = new TipoSolicitud();
             tipo.setIdTipoSolicitud(dto.getIdTipoSolicitud());
             entidad.setTipoSolicitud(tipo);
         }
+
         if (dto.getIdEstadoSolicitud() != null) {
             EstadoSolicitud estado = new EstadoSolicitud();
             estado.setIdEstadoSolicitud(dto.getIdEstadoSolicitud());
             entidad.setEstadoSolicitud(estado);
         }
+
+        if (dto.getIdServicio() != null) {
+            var servicio = new Servicio();
+            servicio.setIdServicio(dto.getIdServicio());
+            entidad.setServicio(servicio);
+        }
+
         entidad.setFechaCreacion(dto.getFechaCreacion());
         entidad.setNombreCliente(dto.getNombreCliente());
         entidad.setCorreoCliente(dto.getCorreoCliente());
@@ -83,7 +98,7 @@ public class SolicitudMapper {
         tipo.setIdTipoSolicitud(id);
         return tipo;
     }
-    
+
     public static EstadoSolicitud estadoSolicitudFromId(Long id) {
         if (id == null) return null;
         EstadoSolicitud estado = new EstadoSolicitud();

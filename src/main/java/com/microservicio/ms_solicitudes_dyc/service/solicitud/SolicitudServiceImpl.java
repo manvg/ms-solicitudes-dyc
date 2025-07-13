@@ -87,8 +87,8 @@ public class SolicitudServiceImpl implements SolicitudService {
         //Según el tipo de solicitud, insertar en tablas de solicitud_producto y solicitud_imagen
         Long tipo = dto.getIdTipoSolicitud();
         if (tipo != null) {
-            // TIPO "PRODUCTO": idTipoSolicitud == 1
-            if (tipo == 1 && dto.getProductos() != null) {
+            //Solicitud tipo Producto
+            if (tipo == 2 && dto.getProductos() != null) {
                 for (SolicitudProductoDto prodDto : dto.getProductos()) {
                     SolicitudProducto solProd = new SolicitudProducto();
                     solProd.setSolicitud(entidad);
@@ -99,7 +99,7 @@ public class SolicitudServiceImpl implements SolicitudService {
                     solicitudProductoRepository.save(solProd);
                 }
             }
-            //TIPO "PERSONALIZADA": idTipoSolicitud == 3
+            //Solicitud tipo Personalizada
             if (tipo == 3 && dto.getImagenes() != null) {
                 for (SolicitudImagenDto imgDto : dto.getImagenes()) {
                     SolicitudImagen solImg = new SolicitudImagen();

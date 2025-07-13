@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class SolicitudProductoDto {
     private Long idSolicitud;
     private Long idProducto;
+    private String nombreProducto;
     private Integer cantidad;
 }
