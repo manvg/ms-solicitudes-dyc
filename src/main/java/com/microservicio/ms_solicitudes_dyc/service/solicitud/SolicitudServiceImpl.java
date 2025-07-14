@@ -48,12 +48,6 @@ public class SolicitudServiceImpl implements SolicitudService {
         return solicitudRepository.findAll().stream().map(SolicitudMapper::toDto).collect(Collectors.toList());
     }
 
-    //--------- GET ACTIVOS ---------//
-    @Override
-    public List<SolicitudDto> obtenerActivos() {
-        return solicitudRepository.findByEstadoSolicitud_Activo(1).stream().map(SolicitudMapper::toDto).collect(Collectors.toList());
-    }
-
     //--------- GET POR ID ---------//
     @Override
     public SolicitudDto obtenerPorId(Long id) {
@@ -168,15 +162,6 @@ public class SolicitudServiceImpl implements SolicitudService {
             }
         }
     
-        solicitudRepository.save(existente);
-    }
-
-    //--------- CAMBIAR ESTADO ACTIVO/INACTIVO ---------//
-    @Override
-    public void cambiarEstado(Long id, int activo) {
-        Solicitud existente = solicitudRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
-        existente.getEstadoSolicitud().setActivo(activo);
         solicitudRepository.save(existente);
     }
 

@@ -24,11 +24,6 @@ public class SolicitudController {
         return ResponseEntity.ok(solicitudService.obtenerTodos());
     }
 
-    @GetMapping("/activos")
-    public ResponseEntity<List<SolicitudDto>> obtenerActivos() {
-        return ResponseEntity.ok(solicitudService.obtenerActivos());
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<SolicitudDto> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(solicitudService.obtenerPorId(id));
@@ -46,17 +41,6 @@ public class SolicitudController {
     public ResponseEntity<ResponseModelDto> actualizar(@PathVariable Long id, @RequestBody SolicitudDto dto) {
         solicitudService.actualizar(id, dto);
         return ResponseEntity.ok(new ResponseModelDto(true, MensajesSolicitud.ACTUALIZADO));
-    }
-
-    @PutMapping("/{id}/cambiar-estado")
-    public ResponseEntity<ResponseModelDto> cambiarEstado(@PathVariable Long id, @RequestParam("activo") int activo) {
-        if (activo != 0 && activo != 1) {
-            return ResponseEntity.badRequest().body(new ResponseModelDto(false, MensajesSolicitud.ESTADO_INVALIDO));
-        }
-
-        solicitudService.cambiarEstado(id, activo);
-        String mensaje = (activo == 1) ? MensajesSolicitud.ACTIVADO : MensajesSolicitud.DESACTIVADO;
-        return ResponseEntity.ok(new ResponseModelDto(true, mensaje));
     }
 
     //---------MÉTODOS DELETE---------//
