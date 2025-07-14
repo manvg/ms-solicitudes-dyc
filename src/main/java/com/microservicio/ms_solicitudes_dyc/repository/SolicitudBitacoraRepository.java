@@ -7,4 +7,5 @@ import com.microservicio.ms_solicitudes_dyc.model.entity.SolicitudBitacora;
 
 public interface SolicitudBitacoraRepository extends JpaRepository<SolicitudBitacora, Long> {
     List<SolicitudBitacora> findByEstadoSolicitud_Activo(Integer activo);
+    List<SolicitudBitacora> findBySolicitudIdSolicitudOrderByFechaCreacionAsc(Long idSolicitud);
 }

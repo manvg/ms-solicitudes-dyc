@@ -12,6 +12,7 @@ public class SolicitudBitacoraDto {
     private Long idSolicitudBitacora;
     private Long idSolicitud;
     private Long idEstadoSolicitud;
+    private String nombreEstado;
     private String descripcion;
     private LocalDateTime fechaCreacion;
     private String usuarioCreacion;
