@@ -75,7 +75,7 @@ public class SolicitudServiceImpl implements SolicitudService {
         bitacora.setEstadoSolicitud(entidad.getEstadoSolicitud());
         bitacora.setDescripcion("Solicitud creada");
         bitacora.setFechaCreacion(java.time.LocalDateTime.now());
-        bitacora.setUsuarioCreacion(dto.getCorreoCliente());
+        bitacora.setUsuarioCreacion(dto.getUsuarioCreacion());
         solicitudBitacoraRepository.save(bitacora);
 
         //Según el tipo de solicitud, insertar en tablas de solicitud_producto y solicitud_imagen

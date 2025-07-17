@@ -25,5 +25,6 @@ public class SolicitudDto {
     private String observaciones;
     private List<SolicitudProductoDto> productos;
     private List<SolicitudImagenDto> imagenes;
+    private String usuarioCreacion;
 }
 

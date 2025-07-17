@@ -57,7 +57,8 @@ public class SolicitudMapper {
             entidad.getTelefonoCliente(),
             entidad.getObservaciones(),
             productos,
-            imagenes
+            imagenes,
+            ""
         );
     }
 
