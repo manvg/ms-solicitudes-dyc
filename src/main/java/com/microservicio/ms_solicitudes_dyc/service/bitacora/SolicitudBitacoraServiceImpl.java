@@ -44,18 +44,25 @@ public class SolicitudBitacoraServiceImpl implements SolicitudBitacoraService {
     public void crear(SolicitudBitacoraDto dto) {
         Solicitud solicitud = solicitudRepository.findById(dto.getIdSolicitud())
             .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
-        EstadoSolicitud estado = estadoSolicitudRepository.findById(dto.getIdEstadoSolicitud())
+        EstadoSolicitud nuevoEstado = estadoSolicitudRepository.findById(dto.getIdEstadoSolicitud())
             .orElseThrow(() -> new RuntimeException("Estado de solicitud no encontrado"));
-
+    
+        if (solicitud.getEstadoSolicitud() == null || 
+            !solicitud.getEstadoSolicitud().getIdEstadoSolicitud().equals(nuevoEstado.getIdEstadoSolicitud())) {
+            solicitud.setEstadoSolicitud(nuevoEstado);
+            solicitudRepository.save(solicitud);
+        }
+    
         SolicitudBitacora bitacora = new SolicitudBitacora();
         bitacora.setSolicitud(solicitud);
-        bitacora.setEstadoSolicitud(estado);
+        bitacora.setEstadoSolicitud(nuevoEstado);
         bitacora.setDescripcion(dto.getDescripcion());
         bitacora.setFechaCreacion(LocalDateTime.now());
         bitacora.setUsuarioCreacion(dto.getUsuarioCreacion());
-
+    
         bitacoraRepository.save(bitacora);
     }
+    
 
     @Override
     @Transactional
